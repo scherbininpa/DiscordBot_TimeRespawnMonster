@@ -26,26 +26,37 @@ namespace DiscordBot_TimeRespawnMonster.Module
         }
         
 
-        [SlashCommand("champions", "Список чемпионов")]
-        public async Task HandleChampionsCommand()
+
+        [SlashCommand("championInfo", "Список чемпионов")]
+        public async Task HandleChampionsInformation([Summary(description: "Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName)
         {
-            var AllChampions = factoryChampions.GetAllChampions();
+
+            var champion = factoryChampions.GetChampionByName(ChampionsName);
+            var exampleField = new EmbedFieldBuilder()
+                    .WithName($"Имя: {champion.GetDescription()}")
+                    .WithValue($"Время респа(мин): {champion.MinTimeRespawn()}\n" +
+                             $"Время появления: {champion.MaxTimeRespawn()}")
+                    .WithIsInline(true);
+            var embed = new EmbedBuilder();
+
+            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}").WithColor(Color.Red);
+            embed.AddField(exampleField);
+            embed.WithDescription("ОПИСАНИЕК");
+            embed.Build();
+
+            await RespondAsync("Чемпионы:", embed:embed.Build());
+
+            /*var AllChampions = factoryChampions.GetAllChampions();
+            var listEmbed = new List<Embed>();
             string strChampions = string.Empty;
             foreach (IChampions champion in AllChampions)
             {
-                strChampions += $"Имя: {champion.GetName()}\n" +
+                strChampions += $"Имя: {champion.GetDescription()}\n" +
                                 $"Время респа(мин): {champion.MinTimeRespawn()}\n" +
                                 $"Время респа(макс): {champion.MaxTimeRespawn()}\n";
-                //Stream sr = new FileStream(champion.GetPathImage(),FileMode.OpenOrCreate, FileAccess.ReadWrite);
-                //FileAttachment fa = new FileAttachment(sr, champion.GetPathImage());
-                //fa.FileName = champion.GetPathImage();
-                //fa.Stream = sr;
-               // using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(champion.GetPathImage())))
-                //{
-                    //var d = new FileInfo(champion.GetPathImage());
-                    //var em = new EmbedBuilder().AddField(x => { x.Name = "aaa"; x.Value = champion.GetPathImage(); x.IsInline = false; });
+
                     var exampleAuthor = new EmbedAuthorBuilder()
-                            .WithName("I am a bot")
+                            .WithName($"{champion.GetDescription()}")
                             .WithIconUrl("https://discord.com/assets/e05ead6e6ebc08df9291738d0aa6986d.png");
                     var exampleFooter = new EmbedFooterBuilder()
                             .WithText("I am a nice footer")
@@ -54,25 +65,36 @@ namespace DiscordBot_TimeRespawnMonster.Module
                     //Image b = new Image(champion.GetPathImage());
                     
                     var exampleField = new EmbedFieldBuilder()
-                            .WithName("Title of Another Field")
-                            .WithValue("I am an [example](https://example.com).")
+                            .WithName($"Имя: {champion.GetDescription()}")
+                            .WithValue($"Время респа(мин): {champion.MinTimeRespawn()}\n" +
+                                     $"Время появления: {champion.MaxTimeRespawn()}")
                             .WithIsInline(true);
-                    var otherField = new EmbedFieldBuilder()
-                            .WithName("Title of a Field")
-                            .WithValue("Notice how I'm inline with that other field next to me.")
-                            .WithIsInline(true);
-                    var embed = new EmbedBuilder()
-                            .AddField(exampleField)
-                            .AddField(otherField)
-                            .WithAuthor(exampleAuthor)
-                            .WithFooter(exampleFooter)
-                            .Build();
+                var otherField = new EmbedFieldBuilder()
+                        //.WithName("Title of a Field")
+                        .WithValue($"Время поялвения: {champion.MaxTimeRespawn()}");
+                            //.WithIsInline(false);
+                    //var fileName = Path.GetFileName(champion.GetPathImage());
+                var embed = new EmbedBuilder();
+                            //.WithImageUrl($"attachment://{fileName}").Fields.Add(otherField)
+                            //.AddField(exampleField)
+                            //.AddField(otherField)
+                            //.WithAuthor(exampleAuthor)
+                            //.WithFooter(exampleFooter)
+                            //.Build();
+                embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}").WithColor(Color.Red);
+                embed.AddField(exampleField);
+                embed.WithDescription("ОПИСАНИЕК");
+                //embed.AddField(otherField);
+                            //.WithAuthor(exampleAuthor)
+                            //.WithFooter(exampleFooter)
+                embed.Build();
+                listEmbed.Add(embed.Build());
                 //var d = new FileInfo(champion.GetPathImage());
                 //em.WithUrl(d.FullName);
                 //em.ImageUrl = d.FullName;
                 //FileAttachment fa = new FileAttachment(champion.GetPathImage());,embed:embed)
                 //await Context.Channel.SendFileAsync(new FileAttachment(champion.GetPathImage()), strChampions);
-                await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()),strChampions);
+                //////await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()),strChampions,embed:embed.Build());
                 //await RespondAsync(strChampions);
                 //await ReplyAsync("sss",false, embed);
                 // var fileAtt = new FileAttachment(stream,"AFQQQQ");
@@ -82,8 +104,9 @@ namespace DiscordBot_TimeRespawnMonster.Module
                 //}
                 //sr.Close();
             }
-            // await RespondAsync (strChampions);
+            await RespondAsync("Чемпионы:", listEmbed.ToArray()) ;
             //return;
+            //await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()), strChampions, embeds: listEmbed);*/
         }
 
         [SlashCommand("timers", "список таймеров")]
@@ -109,7 +132,8 @@ namespace DiscordBot_TimeRespawnMonster.Module
             {
                 GlobalVars.listTimers.Add(timeEventChampions);
                 timeEventChampions.EventChange += (s, ee) => { EventHandlerRespawnChampions(s, ee); };
-                await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).GetDescription()}. Примерное время респа {minTime}.");
+                await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).GetDescription()}. " +
+                    $"Примерное время респа {minTime}.");
             }
             else { await RespondAsync(timeEventChampions.msgError); }
 
@@ -117,7 +141,8 @@ namespace DiscordBot_TimeRespawnMonster.Module
         public async void EventHandlerRespawnChampions(Object champion, EventArgs e)
         {
             //var champ = champion as TimeEventChampions;
-            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, время для {(champion as TimeEventChampions).Champion.GetDescription()}");
+            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, время для {(champion as TimeEventChampions).Champion.GetDescription()} " +
+                                $"{((champion as TimeEventChampions).Champion.MaxTimeRespawn().TotalMinutes>0?$" чемпион появится в ближайшие {(champion as TimeEventChampions).Champion.MaxTimeRespawn().TotalMinutes + (champion as TimeEventChampions).delayOfView.TotalMinutes} минут":"")}");
             GlobalVars.listTimers.Remove((champion as TimeEventChampions));
         }
 

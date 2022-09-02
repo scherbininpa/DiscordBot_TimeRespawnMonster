@@ -16,6 +16,6 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:05").TimeOfDay;
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("00:40").TimeOfDay;
+        public TimeSpan MinTimeRespawn() => DateTime.Parse("00:02").TimeOfDay;
     }
 }
