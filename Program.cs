@@ -64,7 +64,7 @@ namespace DiscordBot_TimeRespawnMonster
                 Console.WriteLine("Started");
                 await sCommands.RegisterCommandsToGuildAsync(UInt64.Parse(config["testGuild"]));
             };
-            //var token = "MTAxMTY0MDQ0NjQ0NDkxMjY4MA.GsQQ4s.7BJxTeNXqcBiK3cLt54rGtVVYuDNDNLbjvIUvs";
+
             await _client.LoginAsync(TokenType.Bot, config["tokens:discord"]);
             await _client.StartAsync();
 
