@@ -14,12 +14,16 @@ namespace DiscordBot_TimeRespawnMonster.Champion
     }
     public class FactoryChampions
     {
-        private Dictionary<string,IChampions> dChampions = new Dictionary<string,IChampions>();
+        private Dictionary<string, IChampions> dChampions = new Dictionary<string, IChampions>();
 
         public FactoryChampions()
         {
             dChampions.Add(new Vendigo().GetName(), new Vendigo());
             dChampions.Add(new Librarian().GetName(),new Librarian());
+            dChampions.Add(new MadHarpy().GetName(), new MadHarpy());
+            dChampions.Add(new Rizurul().GetName(), new Rizurul());
+            dChampions.Add(new SnowStorm().GetName(), new SnowStorm());
+            dChampions.Add(new Telek().GetName(), new Telek());
         }
 
         public Array GetAllChampions()

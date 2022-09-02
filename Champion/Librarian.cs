@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiscordBot_TimeRespawnMonster.Champion
 {
-    internal class Librarian : IChampions
+    public class Librarian : IChampions
     {
 
         public string GetDescription() => "Библиотекарь";

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DiscordBot_TimeRespawnMonster.Champion
 {
-    internal class MadHarpy : IChampions
+    public class MadHarpy : IChampions
     {
         public string GetDescription() => "Безумная гарпия";
 
