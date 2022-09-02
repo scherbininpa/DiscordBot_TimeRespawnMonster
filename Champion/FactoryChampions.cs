@@ -1,4 +1,5 @@
 ﻿using Discord.Interactions;
+using DiscordBot_TimeRespawnMonster.EventChampions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +25,11 @@ namespace DiscordBot_TimeRespawnMonster.Champion
             dChampions.Add(new Rizurul().GetName(), new Rizurul());
             dChampions.Add(new SnowStorm().GetName(), new SnowStorm());
             dChampions.Add(new Telek().GetName(), new Telek());
+            dChampions.Add(new MountainTiger().GetName(), new MountainTiger());
+            dChampions.Add(new RagakMorader().GetName(), new RagakMorader());
+            dChampions.Add(new Zaimm().GetName(), new Zaimm());
+            dChampions.Add(new Orcs().GetName(), new Orcs());
+            dChampions.Add(new Observer().GetName(), new Observer());
         }
 
         public Array GetAllChampions()
