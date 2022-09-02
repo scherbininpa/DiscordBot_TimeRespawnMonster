@@ -19,6 +19,7 @@ namespace DiscordBot_TimeRespawnMonster.Champion
         public FactoryChampions()
         {
             dChampions.Add(new Vendigo().GetName(), new Vendigo());
+            dChampions.Add(new Librarian().GetName(),new Librarian());
         }
 
         public Array GetAllChampions()
