@@ -17,10 +17,12 @@ namespace DiscordBot_TimeRespawnMonster
         public readonly IChampions Champion;
         public bool IsValidObject = true;
         public string msgError = string.Empty;
+        public TimeSpan TotalTime { get; private set; }
         public TimeSpan delayOfView { get { return Convert.ToDateTime("00:02").TimeOfDay; } }
         public TimeEventChampions(IChampions champions, TimeSpan time)
         {
             this.Champion = champions;
+
             aTimer = new Timer();
             if (time.TotalMilliseconds < 0) 
             {
@@ -28,16 +30,21 @@ namespace DiscordBot_TimeRespawnMonster
                 IsValidObject = false;
             }
             else {
-                time-=delayOfView;
-                aTimer.Interval = time.TotalMilliseconds;
+                TotalTime = time- delayOfView;
+                aTimer.Interval = (time.TotalMilliseconds < 5000) ? time.TotalMilliseconds:5000 ;
                 aTimer.Elapsed += OnTimedEvent;
-                aTimer.AutoReset = false;
+                aTimer.AutoReset = true;
                 aTimer.Enabled = true;
             }
         }
         public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            EventChange(sender: this, new EventArgs());
+            TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, (int)aTimer.Interval/1000));
+            if (TotalTime.Seconds <= 0)
+            {
+                aTimer.AutoReset = false;
+                EventChange(sender: this, new EventArgs());
+            }
         }
     }
 }

@@ -24,14 +24,11 @@ namespace DiscordBot_TimeRespawnMonster.Module
         {
             await RespondAsync("Работаю!");
         }
-        
-
-
-        [SlashCommand("championInfo", "Список чемпионов")]
-        public async Task HandleChampionsInformation([Summary(description: "Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName)
+        [SlashCommand("info", "Информация о чемпионе")]
+        public async Task ChampionsInformation([Summary(description: "Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName)
         {
 
-            var champion = factoryChampions.GetChampionByName(ChampionsName);
+            IChampions champion = factoryChampions.GetChampionByName(ChampionsName);
             var exampleField = new EmbedFieldBuilder()
                     .WithName($"Имя: {champion.GetDescription()}")
                     .WithValue($"Время респа(мин): {champion.MinTimeRespawn()}\n" +
@@ -39,74 +36,13 @@ namespace DiscordBot_TimeRespawnMonster.Module
                     .WithIsInline(true);
             var embed = new EmbedBuilder();
 
-            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}").WithColor(Color.Red);
+            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}");
+            embed.WithColor(Color.Red);
             embed.AddField(exampleField);
-            embed.WithDescription("ОПИСАНИЕК");
-            embed.Build();
-
-            await RespondAsync("Чемпионы:", embed:embed.Build());
-
-            /*var AllChampions = factoryChampions.GetAllChampions();
-            var listEmbed = new List<Embed>();
-            string strChampions = string.Empty;
-            foreach (IChampions champion in AllChampions)
-            {
-                strChampions += $"Имя: {champion.GetDescription()}\n" +
-                                $"Время респа(мин): {champion.MinTimeRespawn()}\n" +
-                                $"Время респа(макс): {champion.MaxTimeRespawn()}\n";
-
-                    var exampleAuthor = new EmbedAuthorBuilder()
-                            .WithName($"{champion.GetDescription()}")
-                            .WithIconUrl("https://discord.com/assets/e05ead6e6ebc08df9291738d0aa6986d.png");
-                    var exampleFooter = new EmbedFooterBuilder()
-                            .WithText("I am a nice footer")
-                            .WithIconUrl("https://images.stopgame.ru/uploads/images/457066/form/2017/04/22/1492850887.jpg");
-                    //var f = a as EmbedImage()
-                    //Image b = new Image(champion.GetPathImage());
-                    
-                    var exampleField = new EmbedFieldBuilder()
-                            .WithName($"Имя: {champion.GetDescription()}")
-                            .WithValue($"Время респа(мин): {champion.MinTimeRespawn()}\n" +
-                                     $"Время появления: {champion.MaxTimeRespawn()}")
-                            .WithIsInline(true);
-                var otherField = new EmbedFieldBuilder()
-                        //.WithName("Title of a Field")
-                        .WithValue($"Время поялвения: {champion.MaxTimeRespawn()}");
-                            //.WithIsInline(false);
-                    //var fileName = Path.GetFileName(champion.GetPathImage());
-                var embed = new EmbedBuilder();
-                            //.WithImageUrl($"attachment://{fileName}").Fields.Add(otherField)
-                            //.AddField(exampleField)
-                            //.AddField(otherField)
-                            //.WithAuthor(exampleAuthor)
-                            //.WithFooter(exampleFooter)
-                            //.Build();
-                embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}").WithColor(Color.Red);
-                embed.AddField(exampleField);
-                embed.WithDescription("ОПИСАНИЕК");
-                //embed.AddField(otherField);
-                            //.WithAuthor(exampleAuthor)
-                            //.WithFooter(exampleFooter)
-                embed.Build();
-                listEmbed.Add(embed.Build());
-                //var d = new FileInfo(champion.GetPathImage());
-                //em.WithUrl(d.FullName);
-                //em.ImageUrl = d.FullName;
-                //FileAttachment fa = new FileAttachment(champion.GetPathImage());,embed:embed)
-                //await Context.Channel.SendFileAsync(new FileAttachment(champion.GetPathImage()), strChampions);
-                //////await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()),strChampions,embed:embed.Build());
-                //await RespondAsync(strChampions);
-                //await ReplyAsync("sss",false, embed);
-                // var fileAtt = new FileAttachment(stream,"AFQQQQ");
-
-                //await RespondWithFileAsync(fileAtt);
-                //await 
-                //}
-                //sr.Close();
-            }
-            await RespondAsync("Чемпионы:", listEmbed.ToArray()) ;
-            //return;
-            //await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()), strChampions, embeds: listEmbed);*/
+            //embed.WithDescription("ОПИСАНИЕК");
+            //embed.Build();
+            await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()), embed: embed.Build());
+            //await RespondAsync("Чемпионы:", embed: embed.Build());
         }
 
         [SlashCommand("timers", "список таймеров")]
@@ -117,7 +53,7 @@ namespace DiscordBot_TimeRespawnMonster.Module
             int i = 0;
             foreach (TimeEventChampions timer in GlobalVars.listTimers)
             {
-                str += $"{++i}. {timer.Champion.GetDescription()}\n";
+                str += $"{++i}. **{timer.Champion.GetDescription()}** через {(int)timer.TotalTime.TotalMinutes} минут\n";
             }
             await RespondAsync(str==string.Empty?"нет записей":str);
         }

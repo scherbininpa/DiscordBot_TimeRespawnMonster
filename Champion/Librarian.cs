@@ -13,7 +13,7 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public string GetName() => "Librarian";
 
-        public string GetPathImage()=> @"imageChampions\noImage.png";
+        public string GetPathImage()=> @"imageChampions\noImage.jpg";
 
         public TimeSpan MaxTimeRespawn()=> DateTime.Parse("00:05").TimeOfDay;
 
