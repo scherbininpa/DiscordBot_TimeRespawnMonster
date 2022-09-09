@@ -19,7 +19,7 @@ namespace DiscordBot_TimeRespawnMonster.EventChampions
 
         public TimeSpan AppearanceTime => new TimeSpan(0,0,0);
 
-        public string PathImage => @"imageChampions\noImage.png";
+        public string PathImage => @"imageChampions/noImage.png";
 
     }
 }

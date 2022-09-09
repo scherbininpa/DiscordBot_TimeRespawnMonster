@@ -54,3 +54,5 @@ O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\bin\Debug\net6.0\runtimes\
 O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll
 O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Yaml.dll
 O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\bin\Debug\net6.0\YamlDotNet.dll
+O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\obj\Debug\net6.0\DiscordBot_TimeRespawnMonster.Properties.Resources.resources
+O:\sharpProekt\HomeWork\DiscordBot_TimeRespawnMonster\obj\Debug\net6.0\DiscordBot_TimeRespawnMonster.csproj.GenerateResource.cache

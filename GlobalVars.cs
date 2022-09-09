@@ -26,15 +26,10 @@ namespace DiscordBot_TimeRespawnMonster
                 historyRespawn.Add(NameChampion, time);
             }
         }
-        public static string GetTime()
-        {
-            return $"{DateTime.Now.ToString("s'HH:mm'")}";
-        }
         public static string GetHistoryRespawn()
         {
             string resultRow = string.Empty;
             string timeToView =string.Empty;
-            int i=1;
             if (historyRespawn.Count > 0)
             {
                 foreach (var keyValuePair in historyRespawn)

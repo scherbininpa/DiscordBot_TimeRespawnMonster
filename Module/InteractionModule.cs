@@ -33,22 +33,42 @@ namespace DiscordBot_TimeRespawnMonster.Module
         [SlashCommand("info", "Информация о чемпионе")]
         public async Task ChampionsInformation([Summary(description: "Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName)
         {
-
             IChampions champion = factoryChampions.GetChampionByName(ChampionsName);
+            EmbedFieldBuilder DescriptionFields = new EmbedFieldBuilder().WithValue($"HP:\n" +
+                                                                                $"Время респа:\n" +
+                                                                                $"Время появления:\n")
+                                                                            .WithIsInline(true)
+                                                                            .WithName("Параметры");
+            EmbedFieldBuilder valueFields = new EmbedFieldBuilder().WithValue($"{champion.HitPoint}\n" +
+                                                                                $"{champion.RespawnTime.Hours} ч. {champion.RespawnTime.Minutes} мин.\n" +
+                                                                                $"{champion.AppearanceTime.Hours} ч. {champion.AppearanceTime.Minutes} мин.\n")
+                                                                            .WithIsInline(true)
+                                                                            .WithName("значения:");
+
+            EmbedFieldBuilder dropValue = new EmbedFieldBuilder().WithName("Дроп").WithValue("Эпик").WithIsInline(false);
             var exampleField = new EmbedFieldBuilder()
-                    .WithName($"Имя: {champion.Name}")
-                    .WithValue($"Время респа(мин): {champion.RespawnTime}\n" +
-                             $"Время появления: {champion.AppearanceTime}")
-                    .WithIsInline(true);
+                    .WithName($"{champion.Name}")
+                    .WithValue($"**HP:** {champion.HitPoint}\n" +
+                                $"**Время респа:** {champion.RespawnTime.Hours}ч. {champion.RespawnTime.Minutes}мин.\n"  +
+                                $"**Время появления:** {champion.AppearanceTime.Hours}ч. {champion.AppearanceTime.Minutes}мин.\n")
+                    .WithIsInline(false);
             var embed = new EmbedBuilder();
 
-            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.PathImage)}");
+            //embed.WithImageUrl($"attachment://{Path.GetFileName(champion.PathImage)}");
+            //embed.Timestamp = DateTime.Now;
+            //embed.WithTitle("Title");
+            //embed.WithAuthor("Autor");
+            embed.WithAuthor($"{champion.Name}");
             embed.WithColor(Color.Red);
-            embed.AddField(exampleField);
+            //embed.WithFooter(new EmbedFooterBuilder().WithIconUrl($"attachment://{Path.GetFileName(champion.PathImage)}").WithText("Встречается в: (список локаций)"));
+            embed.WithThumbnailUrl($"attachment://{Path.GetFileName(champion.PathImage)}");
+            embed.AddField(DescriptionFields);
+            embed.AddField(valueFields);
+            //embed.AddField(dropValue);
             //embed.WithDescription("ОПИСАНИЕК");
             //embed.Build();
             await RespondWithFileAsync(new FileAttachment(champion.PathImage), embed: embed.Build());
-            //await RespondAsync("Чемпионы:", embed: embed.Build());
+            //await RespondAsync(embed: embed.Build());
         }
 
         [SlashCommand("timers", "список таймеров")]

@@ -12,13 +12,13 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public string Name => "Заимм";
 
-        public int HitPoint => throw new NotImplementedException();
+        public int HitPoint => 9100;
 
         public TimeSpan RespawnTime => new TimeSpan(0,2,0);
 
         public TimeSpan AppearanceTime => new TimeSpan(0,5,0);
 
-        public string PathImage => @"imageChampions\Zaimm.png";
+        public string PathImage => @"imageChampions/Zaimm.png";
 
     }
 }

@@ -18,7 +18,7 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public TimeSpan AppearanceTime => new TimeSpan(0,0,0);
 
-        public string PathImage => @"imageChampions\Telek.png";
+        public string PathImage => @"imageChampions/Telek.png";
 
     }
 }

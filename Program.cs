@@ -14,7 +14,7 @@ namespace DiscordBot_TimeRespawnMonster
 {
     public class Program
     {
-        DiscordSocketClient client;
+        //DiscordSocketClient client;
 
         public static Task Main(string[] args)
             => new Program().MainAsync();

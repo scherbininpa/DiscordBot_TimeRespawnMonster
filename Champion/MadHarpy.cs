@@ -17,6 +17,6 @@ namespace DiscordBot_TimeRespawnMonster.Champion
         public TimeSpan RespawnTime => new TimeSpan(7, 0, 0);
         public TimeSpan AppearanceTime => new TimeSpan(1,0,0);
 
-        public string PathImage => @"imageChampions\MadHarpy.png";
+        public string PathImage => @"imageChampions/MadHarpy.png";
     }
 }
