@@ -8,14 +8,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class Telek:IChampions
     {
-        public string GetDescription() => "Телек";
+        public string ID => "Telek";
 
-        public string GetName() => "Telek";
+        public string Name => "Телек";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 4600;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:00").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(1,0,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("01:00").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0,0,0);
+
+        public string PathImage => @"imageChampions\Telek.png";
+
     }
 }

@@ -8,14 +8,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class RagakMorader:IChampions
     {
-        public string GetDescription() => "Рагак морадер";
+        public string ID => "RagakMorader";
 
-        public string GetName() => "RagakMorader";
+        public string Name => "Рагак морадер";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 6200;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("01:00").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(11,20,00);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("11:20").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(1,0,0);
+
+        public string PathImage => @"imageChampions\RagakMorader.png";
+
     }
 }

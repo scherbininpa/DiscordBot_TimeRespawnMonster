@@ -8,14 +8,16 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class Rizurul:IChampions
     {
-        public string GetDescription() => "Ризурул";
+        public string ID => "Rizurul";
 
-        public string GetName() => "Rizurul";
+        public string Name => "Ризурул";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 4500;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:02").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(0,40,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("00:02").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0,5,0);
+
+        public string PathImage => @"imageChampions\Rizurul.png";
     }
 }

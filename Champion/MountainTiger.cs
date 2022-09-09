@@ -8,14 +8,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class MountainTiger:IChampions
     {
-        public string GetDescription() => "Горный тигр";
+        public string ID => "MountainTiger";
 
-        public string GetName() => "MountainTiger";
+        public string Name => "Горный тигр";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 5000;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:40").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(8,20,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("08:20").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0,40,0);
+
+        public string PathImage => @"imageChampions\noImage.png";
+
     }
 }

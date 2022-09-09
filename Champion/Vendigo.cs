@@ -8,22 +8,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class Vendigo:IChampions
     {
+        public string ID => "Vendigo";
 
-        public string GetDescription() => "Вендиго";
-        public string GetName() => "Vendigo";
-        public string GetPathImage()
-        {
-            return @"imageChampions\vendigo.jpg";
-        }
+        public string Name => "Вендиго";
 
-        public TimeSpan MaxTimeRespawn()
-        {
-            return DateTime.Parse("00:40").TimeOfDay;
-        }
+        public int HitPoint => 43100;
 
-        public TimeSpan MinTimeRespawn()
-        {
-            return DateTime.Parse("02:00").TimeOfDay;
-        }
+        public TimeSpan RespawnTime => new TimeSpan(2,0,0);
+
+        public TimeSpan AppearanceTime => new TimeSpan(0,40,0);
+
+        public string PathImage => @"imageChampions\Vendigo.png";
+
     }
 }

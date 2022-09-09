@@ -8,14 +8,15 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class MadHarpy : IChampions
     {
-        public string GetDescription() => "Безумная гарпия";
+        public string ID => "MadHarpy";
 
-        public string GetName() => "MadHarpy";
+        public string Name => "Безумная гарпия";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 7000;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("01:00").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(7, 0, 0);
+        public TimeSpan AppearanceTime => new TimeSpan(1,0,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("07:00").TimeOfDay;
+        public string PathImage => @"imageChampions\MadHarpy.png";
     }
 }

@@ -8,14 +8,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 {
     public class Zaimm:IChampions
     {
-        public string GetDescription() => "Заимм";
+        public string ID => "Zaimm";
 
-        public string GetName() => "Zaimm";
+        public string Name => "Заимм";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => throw new NotImplementedException();
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:05").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(0,20,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("00:20").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0,5,0);
+
+        public string PathImage => @"imageChampions\Zaimm.png";
+
     }
 }

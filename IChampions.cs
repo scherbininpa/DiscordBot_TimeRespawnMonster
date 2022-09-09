@@ -26,14 +26,13 @@ namespace DiscordBot_TimeRespawnMonster.Champion
         public TimeSpan RespawnTime { get; }
        
         /// <summary>
-        /// Время появления
+        /// Время появления монстра в локации
         /// </summary>
         public TimeSpan AppearanceTime { get; }
-        public string GetName();
-        public string GetDescription();
-        public string GetPathImage();
 
-        public TimeSpan MinTimeRespawn();
-        public TimeSpan MaxTimeRespawn();
+        /// <summary>
+        /// Ссылка на изображение
+        /// </summary>
+        public string PathImage { get; }
     }
 }
