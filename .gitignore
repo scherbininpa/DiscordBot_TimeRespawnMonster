@@ -2,3 +2,5 @@
 .vs
 *.dll
 *.pdb
+bin\
+obj\
