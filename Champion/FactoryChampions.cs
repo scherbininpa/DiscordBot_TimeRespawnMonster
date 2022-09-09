@@ -19,17 +19,17 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public FactoryChampions()
         {
-            dChampions.Add(new Vendigo().GetName(), new Vendigo());
-            dChampions.Add(new Librarian().GetName(),new Librarian());
-            dChampions.Add(new MadHarpy().GetName(), new MadHarpy());
-            dChampions.Add(new Rizurul().GetName(), new Rizurul());
-            dChampions.Add(new SnowStorm().GetName(), new SnowStorm());
-            dChampions.Add(new Telek().GetName(), new Telek());
-            dChampions.Add(new MountainTiger().GetName(), new MountainTiger());
-            dChampions.Add(new RagakMorader().GetName(), new RagakMorader());
-            dChampions.Add(new Zaimm().GetName(), new Zaimm());
-            dChampions.Add(new Orcs().GetName(), new Orcs());
-            dChampions.Add(new Observer().GetName(), new Observer());
+            dChampions.Add(new Vendigo().ID, new Vendigo());
+            dChampions.Add(new Librarian().ID,new Librarian());
+            dChampions.Add(new MadHarpy().ID, new MadHarpy());
+            dChampions.Add(new Rizurul().ID, new Rizurul());
+            dChampions.Add(new SnowStorm().ID, new SnowStorm());
+            dChampions.Add(new Telek().ID, new Telek());
+            dChampions.Add(new MountainTiger().ID, new MountainTiger());
+            dChampions.Add(new RagakMorader().ID, new RagakMorader());
+            dChampions.Add(new Zaimm().ID, new Zaimm());
+            dChampions.Add(new Orcs().ID, new Orcs());
+            dChampions.Add(new Observer().ID, new Observer());
         }
         public Dictionary<string, IChampions> AllChampionsByDictionary()
         {

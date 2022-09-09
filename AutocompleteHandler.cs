@@ -17,7 +17,7 @@ namespace DiscordBot_TimeRespawnMonster
             List<AutocompleteResult> lResult = new List<AutocompleteResult>();
             foreach (IChampions champion in new FactoryChampions().GetAllChampions())
             {
-                lResult.Add(new AutocompleteResult(champion.GetDescription(), champion.GetName()));
+                lResult.Add(new AutocompleteResult(champion.Name, champion.ID));
             }
             IEnumerable<AutocompleteResult> results = lResult;//new[]
 

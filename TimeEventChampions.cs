@@ -31,7 +31,7 @@ namespace DiscordBot_TimeRespawnMonster
                 IsValidObject = false;
             }
             else {
-                if (this.Champion.MaxTimeRespawn().TotalMinutes == 0) TotalTime = time - delayOfView;
+                if (this.Champion.AppearanceTime.TotalMinutes == 0) TotalTime = time - delayOfView;
                 aTimer.Interval = (time.TotalMilliseconds < 5000) ? time.TotalMilliseconds:5000 ;
                 aTimer.Elapsed += OnTimedEvent;
                 aTimer.AutoReset = true;
@@ -43,10 +43,11 @@ namespace DiscordBot_TimeRespawnMonster
             TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, 0,5000));
             if (TotalTime.Seconds <= 0)
             {
+                aTimer.Elapsed -= OnTimedEvent;
                 aTimer.AutoReset = false;
                 aTimer.Enabled = false;
                 EventChange(sender: this, new EventArgs());
-             GlobalVars.AddLastRespawn(this.Champion.GetName(), DateTime.Now);
+                GlobalVars.AddLastRespawn(this.Champion.ID, DateTime.Now);
             }
         }
     }

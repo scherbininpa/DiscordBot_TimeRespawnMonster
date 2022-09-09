@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace DiscordBot_TimeRespawnMonster.Champion
 {
-    public class Observer:IChampions
+    public class Observer : IChampions
     {
-        public string GetDescription() => "Наблюдатель";
+        public string ID => "Observer";
 
-        public string GetName() => "Observer";
+        public string Name => "Наблюдатель";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 5000;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:00").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(4, 0, 0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("04:00").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0, 0, 0);
+
+        public string PathImage => @"imageChampions\noImage.png";
     }
 }

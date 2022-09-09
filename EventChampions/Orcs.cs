@@ -9,14 +9,17 @@ namespace DiscordBot_TimeRespawnMonster.EventChampions
 {
     public class Orcs:IChampions
     {
-        public string GetDescription() => "Орки";
+        public string ID => "Orcs";
 
-        public string GetName() => "Orcs";
+        public string Name => "Орки";
 
-        public string GetPathImage() => @"imageChampions\noImage.png";
+        public int HitPoint => 0;
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:00").TimeOfDay;
+        public TimeSpan RespawnTime => new TimeSpan(4,0,0);
 
-        public TimeSpan MinTimeRespawn() => DateTime.Parse("04:00").TimeOfDay;
+        public TimeSpan AppearanceTime => new TimeSpan(0,0,0);
+
+        public string PathImage => @"imageChampions\noImage.png";
+
     }
 }

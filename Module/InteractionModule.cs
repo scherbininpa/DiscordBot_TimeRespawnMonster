@@ -36,18 +36,18 @@ namespace DiscordBot_TimeRespawnMonster.Module
 
             IChampions champion = factoryChampions.GetChampionByName(ChampionsName);
             var exampleField = new EmbedFieldBuilder()
-                    .WithName($"Имя: {champion.GetDescription()}")
-                    .WithValue($"Время респа(мин): {champion.MinTimeRespawn()}\n" +
-                             $"Время появления: {champion.MaxTimeRespawn()}")
+                    .WithName($"Имя: {champion.Name}")
+                    .WithValue($"Время респа(мин): {champion.RespawnTime}\n" +
+                             $"Время появления: {champion.AppearanceTime}")
                     .WithIsInline(true);
             var embed = new EmbedBuilder();
 
-            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.GetPathImage())}");
+            embed.WithImageUrl($"attachment://{Path.GetFileName(champion.PathImage)}");
             embed.WithColor(Color.Red);
             embed.AddField(exampleField);
             //embed.WithDescription("ОПИСАНИЕК");
             //embed.Build();
-            await RespondWithFileAsync(new FileAttachment(champion.GetPathImage()), embed: embed.Build());
+            await RespondWithFileAsync(new FileAttachment(champion.PathImage), embed: embed.Build());
             //await RespondAsync("Чемпионы:", embed: embed.Build());
         }
 
@@ -59,7 +59,7 @@ namespace DiscordBot_TimeRespawnMonster.Module
             int i = 0;
             foreach (TimeEventChampions timer in GlobalVars.listTimers)
             {
-                str += $"{++i}. **{timer.Champion.GetDescription()}** через {(int)timer.TotalTime.TotalMinutes} минут\n";
+                str += $"{++i}. **{timer.Champion.Name}** через {(int)timer.TotalTime.TotalMinutes} минут\n";
             }
             await RespondAsync(str==string.Empty?"нет записей":str);
         }
@@ -69,13 +69,13 @@ namespace DiscordBot_TimeRespawnMonster.Module
                                                 [Summary(description:"Время смерти"), Autocomplete(typeof(TimeAutocompleteHandler))]string time="")
         {
             if (time == string.Empty) time= $"{DateTime.Now.ToString("HH:mm")}";
-            var minTime = (factoryChampions.GetChampionByName(ChampionsName).MinTimeRespawn()).Add(Convert.ToDateTime(time).TimeOfDay);
+            var minTime = (factoryChampions.GetChampionByName(ChampionsName).RespawnTime).Add(Convert.ToDateTime(time).TimeOfDay);
             timeEventChampions = new TimeEventChampions(factoryChampions.GetChampionByName(ChampionsName), minTime.Subtract(DateTime.Now.TimeOfDay));
             if (timeEventChampions.IsValidObject)
             {
                 GlobalVars.listTimers.Add(timeEventChampions);
                 timeEventChampions.EventChange += (s, ee) => { EventHandlerRespawnChampions(s, ee); };
-                await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).GetDescription()}. " +
+                await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).Name}. " +
                     $"Примерное время респа {minTime}.");
             }
             else { await RespondAsync(timeEventChampions.msgError); }
@@ -84,8 +84,8 @@ namespace DiscordBot_TimeRespawnMonster.Module
         public async void EventHandlerRespawnChampions(Object champion, EventArgs e)
         {
             //var champ = champion as TimeEventChampions;
-            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, время для {(champion as TimeEventChampions).Champion.GetDescription()} " +
-                                $"{((champion as TimeEventChampions).Champion.MaxTimeRespawn().TotalMinutes>0?$" чемпион появится в ближайшие {(champion as TimeEventChampions).Champion.MaxTimeRespawn().TotalMinutes + (champion as TimeEventChampions).delayOfView.TotalMinutes} минут":"")}");
+            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, время для {(champion as TimeEventChampions).Champion.Name} чемпион появится в ближайшие" +
+                                $"{((champion as TimeEventChampions).Champion.AppearanceTime.TotalMinutes>0 ? $" {(champion as TimeEventChampions).Champion.AppearanceTime.TotalMinutes} минут":$"{+(champion as TimeEventChampions).delayOfView.TotalMinutes}")}");
             GlobalVars.listTimers.Remove((champion as TimeEventChampions));
         }
 

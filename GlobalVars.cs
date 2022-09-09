@@ -39,9 +39,9 @@ namespace DiscordBot_TimeRespawnMonster
             {
                 foreach (var keyValuePair in historyRespawn)
                 {
-                    timeToView = (listChampions[keyValuePair.Key].MaxTimeRespawn().TotalSeconds > 0)
-                                    ? $", время на появление {listChampions[keyValuePair.Key].MaxTimeRespawn().TotalMinutes} минут" : "";
-                    resultRow += $"{listChampions[keyValuePair.Key].GetDescription()}, последний респ:{keyValuePair.Value.ToString()}{timeToView}";
+                    timeToView = (listChampions[keyValuePair.Key].AppearanceTime.TotalSeconds > 0)
+                                    ? $", время на появление {listChampions[keyValuePair.Key].AppearanceTime.TotalMinutes} минут" : "";
+                    resultRow += $"{listChampions[keyValuePair.Key].Name}, последний респ:{keyValuePair.Value.ToString()}{timeToView}";
                 }
             }
             else
