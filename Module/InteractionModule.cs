@@ -24,6 +24,12 @@ namespace DiscordBot_TimeRespawnMonster.Module
         {
             await RespondAsync("Работаю!");
         }
+
+        [SlashCommand("history", "История респов")]
+        public async Task HistoryRespawnAsync()
+        {
+            await RespondAsync(GlobalVars.GetHistoryRespawn());
+        }
         [SlashCommand("info", "Информация о чемпионе")]
         public async Task ChampionsInformation([Summary(description: "Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName)
         {
@@ -60,8 +66,9 @@ namespace DiscordBot_TimeRespawnMonster.Module
 
         [SlashCommand("add", "установить таймер")]
         public async Task AddNewChampionsTimer([Summary(description:"Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName, 
-                                                [Summary(description:"Время смерти"), Autocomplete(typeof(TimeAutocompleteHandler))]string time)
+                                                [Summary(description:"Время смерти"), Autocomplete(typeof(TimeAutocompleteHandler))]string time="")
         {
+            if (time == string.Empty) time= $"{DateTime.Now.ToString("HH:mm")}";
             var minTime = (factoryChampions.GetChampionByName(ChampionsName).MinTimeRespawn()).Add(Convert.ToDateTime(time).TimeOfDay);
             timeEventChampions = new TimeEventChampions(factoryChampions.GetChampionByName(ChampionsName), minTime.Subtract(DateTime.Now.TimeOfDay));
             if (timeEventChampions.IsValidObject)

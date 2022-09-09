@@ -14,7 +14,7 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public string GetPathImage() => @"imageChampions\noImage.png";
 
-        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:05").TimeOfDay;
+        public TimeSpan MaxTimeRespawn() => DateTime.Parse("00:02").TimeOfDay;
 
         public TimeSpan MinTimeRespawn() => DateTime.Parse("00:02").TimeOfDay;
     }

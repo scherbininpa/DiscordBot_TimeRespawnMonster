@@ -31,6 +31,11 @@ namespace DiscordBot_TimeRespawnMonster.Champion
             dChampions.Add(new Orcs().GetName(), new Orcs());
             dChampions.Add(new Observer().GetName(), new Observer());
         }
+        public Dictionary<string, IChampions> AllChampionsByDictionary()
+        {
+            return dChampions;
+        }
+
 
         public Array GetAllChampions()
         { 

@@ -22,6 +22,7 @@ namespace DiscordBot_TimeRespawnMonster
         public TimeEventChampions(IChampions champions, TimeSpan time)
         {
             this.Champion = champions;
+            TotalTime = time;
 
             aTimer = new Timer();
             if (time.TotalMilliseconds < 0) 
@@ -30,7 +31,7 @@ namespace DiscordBot_TimeRespawnMonster
                 IsValidObject = false;
             }
             else {
-                TotalTime = time- delayOfView;
+                if (this.Champion.MaxTimeRespawn().TotalMinutes == 0) TotalTime = time - delayOfView;
                 aTimer.Interval = (time.TotalMilliseconds < 5000) ? time.TotalMilliseconds:5000 ;
                 aTimer.Elapsed += OnTimedEvent;
                 aTimer.AutoReset = true;
@@ -39,11 +40,13 @@ namespace DiscordBot_TimeRespawnMonster
         }
         public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, (int)aTimer.Interval/1000));
+            TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, 0,5000));
             if (TotalTime.Seconds <= 0)
             {
                 aTimer.AutoReset = false;
+                aTimer.Enabled = false;
                 EventChange(sender: this, new EventArgs());
+             GlobalVars.AddLastRespawn(this.Champion.GetName(), DateTime.Now);
             }
         }
     }
