@@ -62,6 +62,7 @@ namespace DiscordBot_TimeRespawnMonster
             _client.Ready += async () =>
             {
                 Console.WriteLine("Started");
+                //await sCommands.RegisterCommandsGloballyAsync();
                 await sCommands.RegisterCommandsToGuildAsync(UInt64.Parse(config["testGuild"]));
             };
 

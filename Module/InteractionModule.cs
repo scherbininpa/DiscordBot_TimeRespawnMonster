@@ -77,7 +77,7 @@ namespace DiscordBot_TimeRespawnMonster.Module
             
             string str = string.Empty;
             int i = 0;
-            foreach (TimeEventChampions timer in GlobalVars.listTimers)
+            foreach (TimeEventChampions timer in GlobalVars.activeTimers.Values)
             {
                 str += $"{++i}. **{timer.Champion.Name}** через {(int)timer.TotalTime.TotalMinutes} минут\n";
             }
@@ -88,25 +88,36 @@ namespace DiscordBot_TimeRespawnMonster.Module
         public async Task AddNewChampionsTimer([Summary(description:"Имя чемпиона"), Autocomplete(typeof(ChampionsAutocompleteHandler))] string ChampionsName, 
                                                 [Summary(description:"Время смерти"), Autocomplete(typeof(TimeAutocompleteHandler))]string time="")
         {
-            if (time == string.Empty) time= $"{DateTime.Now.ToString("HH:mm")}";
-            var minTime = (factoryChampions.GetChampionByName(ChampionsName).RespawnTime).Add(Convert.ToDateTime(time).TimeOfDay);
-            timeEventChampions = new TimeEventChampions(factoryChampions.GetChampionByName(ChampionsName), minTime.Subtract(DateTime.Now.TimeOfDay));
-            if (timeEventChampions.IsValidObject)
+            if (GlobalVars.activeTimers.ContainsKey(ChampionsName))
             {
-                GlobalVars.listTimers.Add(timeEventChampions);
-                timeEventChampions.EventChange += (s, ee) => { EventHandlerRespawnChampions(s, ee); };
-                await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).Name}. " +
-                    $"Примерное время респа {minTime}.");
+                await RespondAsync($"{factoryChampions.GetChampionByName(ChampionsName).Name} уже в списке таймеров. Подробности по команде /timers");
+            } 
+            else
+            {
+                if (time == string.Empty) time = $"{DateTime.Now.ToString("HH:mm")}";
+                //var respTime = factoryChampions.GetChampionByName(ChampionsName).RespawnTime;
+                //var t = respTime.Add(Convert.ToDateTime(time).TimeOfDay);
+                var minTime = (factoryChampions.GetChampionByName(ChampionsName).RespawnTime).Add(Convert.ToDateTime(time).TimeOfDay);
+                timeEventChampions = new TimeEventChampions(factoryChampions.GetChampionByName(ChampionsName), minTime.Subtract(DateTime.Now.TimeOfDay));
+                if (timeEventChampions.IsValidObject)
+                {
+                    //GlobalVars.listTimers.Add(timeEventChampions);
+                    GlobalVars.activeTimers.Add(ChampionsName, timeEventChampions);
+                    await RespondAsync($"Добавил напоминание о респе {factoryChampions.GetChampionByName(ChampionsName).Name}. " +
+                        $"Примерное время респа {minTime}.");
+                    timeEventChampions.EventChange += (s, ee) => { EventHandlerRespawnChampions(s, ee); };
+                }
+                else { await RespondAsync(timeEventChampions.msgError); }
             }
-            else { await RespondAsync(timeEventChampions.msgError); }
-
         }
         public async void EventHandlerRespawnChampions(Object champion, EventArgs e)
         {
+            //(champion as TimeEventChampions).EventChange -= EventHandlerRespawnChampions;
             //var champ = champion as TimeEventChampions;
-            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, время для {(champion as TimeEventChampions).Champion.Name} чемпион появится в ближайшие" +
+            await Context.Channel.SendMessageAsync($"@everyone ВНИМАНИЕ, {(champion as TimeEventChampions).Champion.Name} появится в ближайшие" +
                                 $"{((champion as TimeEventChampions).Champion.AppearanceTime.TotalMinutes>0 ? $" {(champion as TimeEventChampions).Champion.AppearanceTime.TotalMinutes} минут":$"{+(champion as TimeEventChampions).delayOfView.TotalMinutes}")}");
-            GlobalVars.listTimers.Remove((champion as TimeEventChampions));
+            GlobalVars.activeTimers.Remove((champion as TimeEventChampions).Champion.ID);
+            //GlobalVars.listTimers.Remove((champion as TimeEventChampions));
         }
 
 

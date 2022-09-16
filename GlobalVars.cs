@@ -10,6 +10,7 @@ namespace DiscordBot_TimeRespawnMonster
     static class GlobalVars
     {
         public static List<TimeEventChampions> listTimers = new List<TimeEventChampions>();
+        public static Dictionary<string,TimeEventChampions> activeTimers = new Dictionary<string,TimeEventChampions>();
         public static Dictionary<string, DateTime> historyRespawn = new Dictionary<string, DateTime>();
         private static Dictionary<string, IChampions> listChampions = new Dictionary<string, IChampions>();
         static GlobalVars()

@@ -14,7 +14,7 @@ namespace DiscordBot_TimeRespawnMonster.Champion
 
         public int HitPoint => 6200;
 
-        public TimeSpan RespawnTime => new TimeSpan(11,20,00);
+        public TimeSpan RespawnTime => new TimeSpan(11,20,0);
 
         public TimeSpan AppearanceTime => new TimeSpan(1,0,0);
 

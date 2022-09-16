@@ -12,6 +12,7 @@ namespace DiscordBot_TimeRespawnMonster
     public class TimeEventChampions
     {
         private static Timer aTimer;
+        private bool FlagActiveTimer;
         //public delegate void MethodContainer();
         public event EventHandler EventChange = delegate { };
         public readonly IChampions Champion;
@@ -31,22 +32,26 @@ namespace DiscordBot_TimeRespawnMonster
                 IsValidObject = false;
             }
             else {
+                FlagActiveTimer = true;
                 if (this.Champion.AppearanceTime.TotalMinutes == 0) TotalTime = time - delayOfView;
+                aTimer.Enabled = true;
                 aTimer.Interval = (time.TotalMilliseconds < 5000) ? time.TotalMilliseconds:5000 ;
                 aTimer.Elapsed += OnTimedEvent;
                 aTimer.AutoReset = true;
-                aTimer.Enabled = true;
             }
         }
         public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, 0,5000));
-            if (TotalTime.Seconds <= 0)
+            TotalTime = TotalTime.Subtract(new TimeSpan(0, 0, 0, 0, 5000));
+            if (TotalTime.Seconds <= 0 && FlagActiveTimer)
             {
+                FlagActiveTimer = false;
+                //aTimer.Stop();
                 aTimer.Elapsed -= OnTimedEvent;
-                aTimer.AutoReset = false;
+                //aTimer.AutoReset = false;
                 aTimer.Enabled = false;
-                EventChange(sender: this, new EventArgs());
+                //aTimer = null;
+                this.EventChange(sender: this, e);
                 GlobalVars.AddLastRespawn(this.Champion.ID, DateTime.Now);
             }
         }
